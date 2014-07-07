@@ -2,8 +2,10 @@ package android.my_first_app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 public class Splash extends Activity{
 
@@ -14,7 +16,12 @@ public class Splash extends Activity{
 		super.onCreate(TravisLoveBacon);
 		setContentView(R.layout.boston);
 		ourSong = MediaPlayer.create(Splash.this, R.raw.music);
-		ourSong.start();
+		SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		boolean music = getPrefs.getBoolean("checkbox", true);
+		if (music == true) {
+			ourSong.start();
+		} 
+		
 		//the framework of a Thread
 		Thread timer = new Thread(){
 			public void run() {
@@ -24,7 +31,7 @@ public class Splash extends Activity{
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}finally{
+				} finally {
 					Intent openStartingPoint = new Intent("android.my_first_app.MENU");
 					startActivity(openStartingPoint);
 				}
